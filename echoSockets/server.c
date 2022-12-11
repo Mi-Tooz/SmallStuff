@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #define PORT 8081
-#define MAX_LINE_LENGTH 255
+#define MAX_LINE_LENGTH 256
 
 void error(char* msg)
 {
@@ -63,7 +63,7 @@ int main(void)
 		if(buffer[0] == 0x0A)
 			break;
 
-		if(numBytes < 0)
+		if(numBytes <= 0)
 			error("reading");
 
 		//chane message
