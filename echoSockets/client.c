@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #define PORT 8081
-#define MAX_LINE_LENGTH 255
+#define MAX_LINE_LENGTH 256
 
 void error(char* msg)
 {
@@ -51,7 +51,7 @@ int main(void)
 			break;
 		}
 
-		if(&buffer[MAX_LINE_LENGTH-1] == NULL)
+		if(sizeof(buffer)/sizeof(buffer[0]) >= MAX_LINE_LENGTH)
 			error("Too large message");
 
 		// Write message to a server
