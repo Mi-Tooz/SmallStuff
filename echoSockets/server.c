@@ -9,8 +9,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#define PORT 8080
-#define MAX_LINE_LENGTH 256
+#define PORT 8081
+#define MAX_LINE_LENGTH 255
 
 void error(char* msg)
 {
@@ -60,14 +60,15 @@ int main(void)
 		bzero(buffer, MAX_LINE_LENGTH);
 		numBytes = read(clientFd, buffer, MAX_LINE_LENGTH);
 
-		if(numBytes == 0)
+		if(buffer[0] == 0x0A)
 			break;
 
 		if(numBytes < 0)
 			error("reading");
 
 		//chane message
-		buffer[1] = toupper(buffer[1]);
+		buffer[0] = toupper(buffer[0]);
+		printf("Client: %s", buffer);
 
 		// send message
 		if( write(clientFd, buffer, numBytes) < 0 )
@@ -79,4 +80,3 @@ int main(void)
 
 	return 0;
 }
-
